@@ -448,3 +448,66 @@ function saveName(){
     repeating-linear-gradient(-45deg, transparent, transparent 10px, var(--accent) 10px, var(--accent) 12px);
   background-size: 100px 100px;
     }
+<script>
+// لازم يكون هذا أول سطر في الجافاسكربت
+window.alert = function(msg){
+  document.getElementById('alertText').textContent = msg;
+  document.getElementById('alertModal').classList.add('show');
+}
+
+function setTheme(t){document.documentElement.setAttribute('data-theme',t); localStorage.setItem('theme',t)}
+function setColor(c){
+  document.documentElement.style.setProperty('--accent',c); 
+  localStorage.setItem('color',c);
+  document.body.classList.remove('theme-blue','theme-pink','theme-gold');
+  if(c === '#3b82f6') document.body.classList.add('theme-blue');
+  if(c === '#ec4899') document.body.classList.add('theme-pink');
+  if(c === '#f59e0b') document.body.classList.add('theme-gold');
+}
+const savedTheme=localStorage.getItem('theme')||'light'; setTheme(savedTheme);
+const savedColor=localStorage.getItem('color'); if(savedColor) setColor(savedColor);
+
+function toggleMenu(){document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show')}
+
+window.onload=()=>{
+  if(!localStorage.getItem('studentName')) document.getElementById('nameModal').classList.add('show');
+  updateCountdown();
+  if(savedColor) setColor(savedColor);
+}
+function saveName(){
+  const name=document.getElementById('nameInput').value.trim();
+  if(!name) return alert('اكتبي اسمك أول');
+  localStorage.setItem('studentName',name);
+  closeModal('nameModal');
+  document.getElementById('welcomeText').innerHTML=`أهلاً بك يا ${name} 🌷<br>نتمنى لك رحلة تعليمية ممتعة ومليئة بالإنجاز والتفوق 📚✨`;
+  document.getElementById('welcomeModal').classList.add('show');
+}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+
+const quotes=["كل صفحة تدرسينها اليوم تقربك من حلمك غدًا ✨","النجاح يبدأ بخطوة مذاكرة","اجتهدي اليوم، افتخري غدًا"];
+function newQuote(){document.getElementById('quote').textContent=quotes[Math.floor(Math.random()*quotes.length)]}
+
+let time=1500, running=false, interval;
+function updateTimer(){const m=Math.floor(time/60), s=time%60; document.getElementById('timer').textContent=`${m}:${s.toString().padStart(2,'0')}`}
+function startTimer(){if(running)return; running=true; interval=setInterval(()=>{time--; updateTimer(); if(time<=0){clearInterval(interval); alert('انتهى وقت المذاكرة! خذي راحة 5 دقايق'); resetTimer()}},1000)}
+function resetTimer(){clearInterval(interval); running=false; time=1500; updateTimer()} updateTimer();
+
+function updateCountdown(){
+  const exam=new Date('2026-05-20');
+  const diff=Math.ceil((exam-new Date())/(1000*60*60*24));
+  document.getElementById('countdown').textContent=diff>0?diff:'بدأت الاختبارات!';
+}
+
+let surpriseCount=0;
+const duas=["اللهم يسّر لي المذاكرة وبارك لي في وقتي","اللهم لا سهل إلا ما جعلته سهلاً","رب زدني علمًا"];
+function surprise(){
+  if(surpriseCount>=3){
+    alert('انتهت محاولاتك اليوم، ارجعي بكرة 🌸');
+  } else {
+    surpriseCount++;
+    alert(duas[Math.floor(Math.random()*duas.length)]);
+  }
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Amiri',serif}
