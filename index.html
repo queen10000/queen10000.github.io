@@ -405,4 +405,46 @@ function saveName(){
   }
   document.getElementById('surpriseModal').classList.add('show');
   }
-  
+  <div class="modal" id="alertModal">
+  <div class="modal-box">
+    <p id="alertText" style="background:var(--bg); padding:12px; border-radius:10px; margin-bottom:16px; font-size:1rem"></p>
+    <button class="btn" onclick="closeModal('alertModal')">حسناً</button>
+  </div>
+</div>
+  .theme-decor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.08;
+}
+
+/* زينة الأزرق - أشكال ولادية */
+.theme-blue .theme-decor {
+  background-image: 
+    radial-gradient(circle at 20% 30%, var(--accent) 2px, transparent 2px),
+    radial-gradient(circle at 80% 70%, var(--accent) 2px, transparent 2px),
+    linear-gradient(45deg, transparent 40%, var(--accent) 50%, transparent 60%);
+  background-size: 100px 100px, 150px 150px, 200px 200px;
+}
+
+/* زينة الوردي - ورود */
+.theme-pink .theme-decor {
+  background-image: 
+    radial-gradient(circle, var(--accent) 15px, transparent 15px),
+    radial-gradient(circle, var(--accent) 10px, transparent 10px);
+  background-size: 80px 80px, 120px 120px;
+  background-position: 0 0, 40px 40px;
+  filter: blur(1px);
+}
+
+/* زينة الذهبي - زخارف إسلامية */
+.theme-gold .theme-decor {
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 10px, var(--accent) 10px, var(--accent) 12px),
+    repeating-linear-gradient(-45deg, transparent, transparent 10px, var(--accent) 10px, var(--accent) 12px);
+  background-size: 100px 100px;
+    }
