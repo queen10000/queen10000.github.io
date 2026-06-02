@@ -390,4 +390,19 @@ function saveName(){
     <button class="btn" onclick="closeModal('alertModal')">حسناً</button>
   </div>
 </div>
+  <div class="modal" id="alertModal">
+  <div class="modal-box">
+    <p id="alertText" style="background:var(--bg); padding:12px; border-radius:10px; margin-bottom:16px; font-size:1rem"></p>
+    <button class="btn" onclick="closeModal('alertModal')">حسناً</button>
+  </div>
+</div>function surprise(){
+  if(surpriseCount>=3){
+    document.getElementById('surpriseText').textContent = 'انتهت محاولاتك اليوم، ارجعي بكرة 🌸';
+  } else {
+    surpriseCount++;
+    const duas=["اللهم يسّر لي المذاكرة وبارك لي في وقتي","اللهم لا سهل إلا ما جعلته سهلاً","رب زدني علمًا"];
+    document.getElementById('surpriseText').textContent = duas[Math.floor(Math.random()*duas.length)];
+  }
+  document.getElementById('surpriseModal').classList.add('show');
+  }
   
