@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ثالث متوسط</title>
+<meta name="theme-color" content="#2c3e50">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoi2LTYp9mEINmE2YLYp9mHIiwic2hvcnRfbmFtZSI6ItmE2YLYp9mHIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIn0=">
+<style>
+:root{
+  --bg:#f5f7fa; --card:#fff; --text:#2c3e50; --accent:#3498db;
+  --gold:#f4d03f; --muted:#7f8c8d;
+}
+[data-theme="dark"]{
+  --bg:#1a1a1a; --card:#2d2d2d; --text:#ecf0f1; --muted:#bdc3c7;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Tahoma',sans-serif}
+body{background:var(--bg);color:var(--text);transition:.3s}
+.top-bar{position:fixed;top:0;right:0;left:0;height:50px;background:var(--card);box-shadow:0 2px 5px rgba(0,0,0,.1);display:flex;align-items:center;padding:0 15px;z-index:100}
+.site-badge{position:absolute;left:15px;background:var(--accent);color:#fff;padding:5px 12px;border-radius:6px;font-size:14px;font-weight:bold}
+.menu-btn{margin-right:auto;font-size:24px;cursor:pointer}
+.sidebar{position:fixed;top:0;right:-300px;width:280px;height:100%;background:var(--card);box-shadow:-2px 0 10px rgba(0,0,0,.2);transition:.3s;z-index:200;padding-top:60px;overflow-y:auto}
+.sidebar.open{right:0}
+.sidebar-item{padding:15px 20px;cursor:pointer;border-bottom:1px solid var(--bg);display:flex;align-items:center;gap:10px}
+.sidebar-item:hover{background:var(--bg)}
+.main{margin-top:70px;padding:20px;max-width:1000px;margin-inline:auto}
+.quote-box{background:var(--accent);color:#fff;padding:15px;border-radius:10px;text-align:center;margin-bottom:20px;cursor:pointer}
+.subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-bottom:30px}
+.subject{background:var(--gold);padding:25px;border-radius:12px;text-align:center;font-size:18px;font-weight:bold;cursor:pointer;transition:.2s}
+.subject:hover{transform:scale(1.05)}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);padding:10px;text-align:center;font-size:12px;color:var(--muted);border-top:1px solid var(--bg)}
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index=150;display:none}
+.overlay.show{display:block}
+.popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--card);padding:25px;border-radius:15px;max-width:400px;width:90%;z-index:250;display:none}
+.popup.show{display:block}
+input{width:100%;padding:10px;border:1px solid var(--muted);border-radius:6px;background:var(--bg);color:var(--text);margin:10px 0}
+button{background:var(--accent);color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:16px}
+.color-circle{width:35px;height:35px;border-radius:50%;display:inline-block;margin:5px;cursor:pointer;border:2px solid var(--text)}
+.color-blue{background:#3498db}.color-pink{background:#e91e63}.color-gold{background:#f4d03f}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  <div class="site-badge">ثالث متوسط</div>
+</div>
 
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item" onclick="showAlert('الصفحة الرئيسية: هنا المواد والجدول')">🏠 الصفحة الرئيسية</div>
+  <div class="sidebar-item" onclick="toggleTheme()">⚙️ الوضع <span id="themeIcon">🌙</span></div>
+  <div class="sidebar-item" onclick="showColors()">🎨 لون الخط</div>
+  <div id="colorPicker" style="display:none;padding:0 20px 15px">
+    <div class="color-circle color-blue" onclick="setAccent('#3498db')"></div>
+    <div class="color-circle color-pink" onclick="setAccent('#e91e63')"></div>
+    <div class="color-circle color-gold" onclick="setAccent('#f4d03f')"></div>
+  </div>
+  <div class="sidebar-item" onclick="showAlert('مكتبة الأذكار قادمة قريباً')">📚 مكتبة الأذكار</div>
+  <div class="sidebar-item" onclick="showAlert('اسألني بالذكاء الاصطناعي قريباً')">📝 اسألني</div>
+  <div class="sidebar-item" onclick="surpriseBox()">🎁 صندوق المفاجآت</div>
+  <div class="sidebar-item" onclick="showDreams()">💭 أحلامي</div>
+  <div class="sidebar-item" onclick="showAlert('لوحة المتفوقين محلياً')">🏆 لوحة المتفوقين</div>
+  <div class="sidebar-item" onclick="showAlert('مؤقت البومودورو قادم')">⏰ مؤقت المذاكرة</div>
+  <div class="sidebar-item" onclick="showContact()">📜 تواصل معنا</div>
+</div>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="main">
+  <div class="quote-box" onclick="newQuote()" id="quote">كل صفحة تدرسها اليوم تقربك من حلمك غداً ✨</div>
+  
+  <div class="subjects">
+    <div class="subject" onclick="showAlert('صفحة الرياضيات')">الرياضيات</div>
+    <div class="subject" onclick="showAlert('صفحة العلوم')">العلوم</div>
+    <div class="subject" onclick="showAlert('صفحة اللغة العربية')">اللغة العربية</div>
+    <div class="subject" onclick="showAlert('صفحة اللغة الإنجليزية')">اللغة الإنجليزية</div>
+  </div>
+</div>
+
+<div class="bottom-bar">
+  عند وجود أخطاء تواصل مع: ✉️ wathker100@gmail.com
+</div>
+
+<div class="popup" id="namePopup">
+  <h3>ما اسمك؟</h3>
+  <input type="text" id="nameInput" placeholder="اكتب/ي هنا بارك الله فيك">
+  <button onclick="saveName()">تم</button>
+</div>
+
+<div class="popup" id="welcomePopup">
+  <p id="welcomeText"></p>
+  <p style="text-align:right;font-size:12px;color:var(--muted)">⚠️ توجد خصوصية تامة بحيث لا يمكن للمنشئ رؤية مستخدمين الرابط أو أسمائهم</p>
+  <button onclick="closePopup('welcomePopup')">آمين</button>
+</div>
+
+<script>
+const quotes=["كل صفحة تدرسها اليوم تقربك من حلمك غداً ✨","المثابرة طريق النجاح","ذاكر اليوم ترتاح غداً"];
+let currentTheme=localStorage.getItem('theme')||'light';
+document.body.dataset.theme=currentTheme;
+updateThemeIcon();
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show')}
+function toggleTheme(){currentTheme=currentTheme==='light'?'dark':'light';document.body.dataset.theme=currentTheme;localStorage.setItem('theme',currentTheme);updateThemeIcon()}
+function updateThemeIcon(){document.getElementById('themeIcon').textContent=currentTheme==='light'?'🌙':'☀️'}
+function setAccent(color){document.documentElement.style.setProperty('--accent',color);localStorage.setItem('accent',color)}
+if(localStorage.getItem('accent')){setAccent(localStorage.getItem('accent'))}
+function showColors(){document.getElementById('colorPicker').style.display=document.getElementById('colorPicker').style.display==='none'?'block':'none'}
+function newQuote(){document.getElementById('quote').textContent=quotes[Math.floor(Math.random()*quotes.length)]}
+function showAlert(msg){alert(msg);toggleSidebar()}
+function showContact(){alert('wathker100@gmail.com');toggleSidebar()}
+function surpriseBox(){alert('اللهم وفق طلاب ثالث متوسط ويسر أمورهم');toggleSidebar()}
+function showDreams(){let dream=prompt('اكتبي حلمك:');if(dream){alert('الله يحقق لك جميع أمانيك، ويا عسى كل ما بخاطرك يصير 🤍');toggleSidebar()}}
+
+window.onload=function(){
+  let name=localStorage.getItem('userName');
+  if(!name){document.getElementById('namePopup').classList.add('show')}
+  else{showWelcome(name)}
+}
+function saveName(){
+  let name=document.getElementById('nameInput').value;
+  if(name){localStorage.setItem('userName',name);document.getElementById('namePopup').classList.remove('show');showWelcome(name)}
+}
+function showWelcome(name){
+  document.getElementById('welcomeText').innerHTML=`أهلاً بك يا ${name} 🌷<br>نتمنى لك رحلة تعليمية ممتعة ومليئة بالإنجاز والتفوق 📚✨`;
+  document.getElementById('welcomePopup').classList.add('show');
+}
+function closePopup(id){document.getElementById(id).classList.remove('show')}
+</script>
+</body>
+</html>
