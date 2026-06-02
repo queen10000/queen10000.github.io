@@ -384,4 +384,10 @@ window.onload=()=>{
 function saveName(){
   const name=document.getElementById('nameInput').value.trim();
   if(!name) return;
- 
+ <div class="modal" id="alertModal">
+  <div class="modal-box">
+    <p id="alertText" style="background:var(--bg); padding:12px; border-radius:10px; margin-bottom:16px; font-size:1rem"></p>
+    <button class="btn" onclick="closeModal('alertModal')">حسناً</button>
+  </div>
+</div>
+  
